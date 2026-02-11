@@ -4,7 +4,9 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 
 dotenv.config();
-connectDB();
+if (process.env.NODE_ENV !== "test") {
+  connectDB();
+}
 
 const app = express();
 
@@ -19,4 +21,8 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log("Servidor corriendo en puerto", PORT));
+if (require.main === module) {
+  app.listen(PORT, () => console.log("Servidor corriendo en puerto", PORT));
+}
+
+module.exports = app;
