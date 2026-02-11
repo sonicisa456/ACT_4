@@ -2,12 +2,13 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Registrar usuario
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const userExists = await User.findOne({ email });
-    if (userExists) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({ message: "El usuario ya existe" });
     }
 
@@ -20,29 +21,37 @@ exports.register = async (req, res) => {
       password: hashedPassword
     });
 
-    res.status(201).json({ message: "Usuario creado" });
+    res.status(201).json({
+      message: "Usuario registrado",
+      id: user._id,
+      email: user.email
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+// Login
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Credenciales inválidas" });
+    if (!user) return res.status(400).json({ message: "Credenciales incorrectas" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Credenciales inválidas" });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) return res.status(400).json({ message: "Credenciales incorrectas" });
 
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "2h" }
     );
 
-    res.json({ token });
+    res.json({
+      message: "Login exitoso",
+      token
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
