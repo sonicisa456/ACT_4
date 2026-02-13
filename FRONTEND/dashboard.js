@@ -96,3 +96,4 @@ function logout() {
 }
 
 cargarProductos();
+"// prueba" 
