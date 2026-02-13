@@ -1,16 +1,12 @@
-const form = document.getElementById("loginForm");
+const API = "https://act-4-eta.vercel.app";
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
+async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("http://localhost:4000/api/auth/login", {
+  const res = await fetch(API + "/api/auth/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
   });
 
@@ -18,8 +14,8 @@ form.addEventListener("submit", async (e) => {
 
   if (data.token) {
     localStorage.setItem("token", data.token);
-    document.getElementById("msg").innerText = "Login exitoso";
+    window.location.href = "dashboard.html";
   } else {
     document.getElementById("msg").innerText = data.message;
   }
-});
+}
