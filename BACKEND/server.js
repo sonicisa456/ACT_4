@@ -14,9 +14,14 @@ if (process.env.NODE_ENV !== "test") {
 
 // Middlewares
 app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+  origin: [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "https://https://act-4-eta.vercel.app/"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
 
