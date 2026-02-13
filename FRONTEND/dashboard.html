@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>ACT 4 - Productos</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Panel de Productos</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<div class="card">
-  <h2>Productos</h2>
+  <div class="container">
+    <h1>Gestión de Productos</h1>
 
-  <input id="name" placeholder="Nombre del producto">
-  <input id="price" type="number" placeholder="Precio">
-  <input id="desc" placeholder="Descripción">
+    <div class="card">
+      <h2>Nuevo producto</h2>
 
-  <button onclick="addProduct()">Agregar</button>
+      <input id="name" type="text" placeholder="Nombre del producto" />
+      <input id="price" type="number" placeholder="Precio" />
+      <input id="description" type="text" placeholder="Descripción" />
 
-  <ul id="list"></ul>
-</div>
+      <button onclick="agregarProducto()">Agregar producto</button>
+    </div>
 
-<script src="dashboard.js"></script>
+    <div class="card">
+      <h2>Productos</h2>
+      <div id="productos" class="productos-grid"></div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+  </div>
+
+  <script src="dashboard.js"></script>
 </body>
 </html>
